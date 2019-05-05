@@ -17,7 +17,7 @@ class Config:
     def __init__(self):
         Config.i = self
         if not os.path.exists(main_config):
-            print('creating new main_config')
+            print('creating new main_config - fill out ./' + main_config + ' and restart')
             o = {}
             for dataName in self.dataNames:
                 o[dataName] = ''
