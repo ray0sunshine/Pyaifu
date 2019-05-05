@@ -21,12 +21,16 @@ class Machine:
         self.state = {}
         for k, v in data['fsm'].items():
             self.state[k] = Step(v)
-        self.cur = self.state[data['start']]
+        self.cur = data['start']
         self.pre = None
 
     def run(self):
-        while self.cur.next:
-            self.execute(self.cur)
+        cur = self.state[self.cur]
+        while cur.next or cur.pixelCheck():
+            if not cur.function:
+                return
+            self.execute()
+            cur = self.state[self.cur]
 
     def checkForStates(self, states):
         for name in states:
@@ -39,21 +43,26 @@ class Machine:
     # makes sure that it's still on current state while retrying if needed
     # does the action
     def execute(self):
-        if self.checkForStates(self.cur.next):
-            self.cur = self.checkForStates(self.cur.next)
+        cur = self.state[self.cur]
+
+        nextStep = self.checkForStates(cur.next)
+        if nextStep:
+            self.pre = self.cur
+            self.cur = nextStep
             return
 
-        while not self.cur.pixelCheck():
+        while not cur.pixelCheck():
             util.wait(0)
+            return
 
-        self.cur.run()
+        cur.run()
 
-        functionData = self.cur.function['data']
+        functionData = cur.function['data']
         util.wait(functionData['wait'], 0.15)
 
         # retry loop, otherwise notify
-        while self.cur.pixelCheck():
-            self.cur.run()
+        while cur.pixelCheck():
+            cur.run()
             util.wait(functionData['retry'], 0.15)
 
 
