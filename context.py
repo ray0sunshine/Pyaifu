@@ -1,5 +1,6 @@
 import win32ui as win
 import win32gui as wgui
+import win32com.client
 import threading
 
 
@@ -27,3 +28,10 @@ class Context:
             self.context.DeleteDC()
         self.lock.release()
         return (c & 0xff), ((c >> 8) & 0xff), ((c >> 16) & 0xff)
+
+    # sets the python app as the focus...I don't know why it works this way lol
+    def setFocus(self):
+        handle = wgui.FindWindow(None, 'python')
+        if handle:
+            win32com.client.Dispatch("WScript.Shell").SendKeys('WHY?')
+            wgui.SetForegroundWindow(handle)

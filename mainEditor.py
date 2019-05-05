@@ -129,6 +129,7 @@ class Widget(QWidget):
 
     def getDelay(self, kind):
         if self.controller.cur and self.controller.cur['function']:
+            Context.i.setFocus()
             cur = self.controller.cur
             cur['function']['data'][kind] = QInputDialog.getDouble(
                 self, 'Set ' + kind + ' time', 'Seconds:',
