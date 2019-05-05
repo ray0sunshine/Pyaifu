@@ -23,6 +23,4 @@ for f in files:
     with open(f, 'r') as config:
         o = json.load(config)
         machine = Machine(o)
-        for k in machine.state:
-            v = machine.state[k]
         machine.run()

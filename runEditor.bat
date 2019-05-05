@@ -1,1 +1,1 @@
-python main_editor.py
+python mainEditor.py

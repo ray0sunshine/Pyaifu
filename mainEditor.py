@@ -1,6 +1,8 @@
 import sys
 import re
 import json
+import queue
+import keyboard
 
 from context import Context
 from controller_editor import Controller
@@ -12,6 +14,8 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 
+q = queue.Queue()
+
 
 class Widget(QWidget):
     def __init__(self, parent=None):
@@ -22,7 +26,7 @@ class Widget(QWidget):
         self.controller = Controller()
 
         self.setAttribute(Qt.WA_TranslucentBackground, True)
-        # self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
+        self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.setFixedSize(Context.i.w, Context.i.h)
         self.move(Context.i.x, Context.i.y)
@@ -58,9 +62,8 @@ class Widget(QWidget):
         self.painter.end()
 
     def initKeys(self):
-        key_suppress = True
+        self.keymap = {}
 
-        # ctrl+o - load state file
         self.hotkey('f1', self.addPixel)
         self.hotkey('ctrl+f1', self.removePixel)
         self.hotkey('f2', self.makeRectClick)
@@ -81,9 +84,20 @@ class Widget(QWidget):
         self.hotkey('ctrl+s', self.saveFile)
         self.hotkey('ctrl+shift+s', self.saveFileAs)
 
+        timer = QTimer(self)
+        timer.setSingleShot(False)
+        timer.timeout.connect(self.processKey)
+        timer.start(40)
+
     def hotkey(self, seq, fn):
-        sc = QShortcut(QKeySequence(seq), self)
-        sc.activated.connect(fn)
+        keyboard.add_hotkey(seq, q.put, [seq])
+        self.keymap[seq] = fn
+
+    def processKey(self):
+        while not q.empty():
+            seq = q.get(False)
+            if(seq):
+                self.keymap[seq]()
 
     def addPixel(self):
         self.controller.addPixel()
