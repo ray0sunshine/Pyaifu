@@ -1,0 +1,1 @@
+python player_raifu.py out/enter.json

@@ -43,23 +43,18 @@ class Machine:
             self.cur = self.checkForStates(self.cur.next)
             return
 
-        for name in self.cur.next:
-            if self.state[name].pixelCheck():
-                self.cur = self.state[name]
-                return
-
         while not self.cur.pixelCheck():
             util.wait(0)
 
         self.cur.run()
 
         functionData = self.cur.function['data']
-        util.wait(functionData['wait'], 0.2)
+        util.wait(functionData['wait'], 0.15)
 
         # retry loop, otherwise notify
         while self.cur.pixelCheck():
             self.cur.run()
-            util.wait(functionData['retry'], 0.2)
+            util.wait(functionData['retry'], 0.15)
 
 
 class Step:
