@@ -94,18 +94,22 @@ class Widget(QWidget):
 
     def makeRectClick(self):
         self.controller.makeClick('rect')
+        self.updateLabels()
         self.update()
 
     def makeCircleClick(self):
         self.controller.makeClick('circle')
+        self.updateLabels()
         self.update()
 
     def makeMiddleClick(self):
         self.controller.makeMiddleClick()
+        self.updateLabels()
         self.update()
 
     def makeDrag(self):
         self.controller.makeDrag()
+        self.updateLabels()
         self.update()
 
     def getDelay(self, kind):
@@ -115,6 +119,8 @@ class Widget(QWidget):
                 self, 'Set ' + kind + ' time', 'Seconds:',
                 cur['function']['data'][kind],
                 0, 180, 2)[0]
+            self.updateLabels()
+            self.update()
 
     def getWait(self):
         self.getDelay('wait')
@@ -143,7 +149,13 @@ class Widget(QWidget):
             else:
                 encounteredNames.add(name)
 
-            ql.setText(str(i) + ' - <' + cur['name'] + '> ' + str(cur['next']))
+            appendix = ''
+            if cur['function']:
+                appendix += ' {' + str(cur['function']['data']['wait']) + ', ' + str(cur['function']['data']['retry']) + '}'
+                if cur['function']['action'] == 'middle':
+                    appendix += ' |MID|'
+
+            ql.setText(str(i) + ' - <' + cur['name'] + '> ' + str(cur['next']) + appendix)
             if self.controller.idx == i:
                 ql.setStyleSheet("color: white; background-color:rgba(0,255,0,0.3)")
             else:

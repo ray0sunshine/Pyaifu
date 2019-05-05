@@ -14,9 +14,6 @@ DRAG_SIMS = 50
 
 class Controller:
     def __init__(self):
-        # the editor controller only has one machine that it edits at a time
-        # with open('config/fsm_template.json', 'r') as config:
-        #     self.machines['test'] = fsm.Machine(json.load(config))
         self.count = 0
         self.cur = None
         self.idx = 0
@@ -43,8 +40,8 @@ class Controller:
             self.cur['function'] = {
                 'action': action,
                 'data': {
-                    'wait': 0.75,
-                    'retry': 1.5,
+                    'wait': self.cur['function']['data']['wait'] if self.cur['function'] else 0.75,
+                    'retry': self.cur['function']['data']['retry'] if self.cur['function'] else 1.5,
                     'points': []
                 }
             }
