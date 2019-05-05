@@ -21,10 +21,12 @@ class Machine:
         self.state = {}
         for k, v in data['fsm'].items():
             self.state[k] = Step(v)
+        self.start = data['start']
         self.cur = data['start']
         self.pre = None
 
     def run(self):
+        self.cur = self.start
         cur = self.state[self.cur]
         while cur.next or cur.pixelCheck():
             if not cur.function:
@@ -34,9 +36,23 @@ class Machine:
 
     def checkForStates(self, states):
         for name in states:
-            if self.state[name].pixelCheck():
+            if self.checkState(name):
                 return name
         return None
+
+    # check if the screen pixels matches any given state
+    def checkState(self, name):
+        return self.state[name].pixelCheck()
+
+    # waits for a conditional state (xor with invert so it can also wait for a state to go away)
+    def waitState(self, name, inverse=False):
+        while not (self.checkState(name) ^ inverse):
+            util.wait(0.1)
+
+    # used to directly execute a state's action
+    def forceRun(self, name):
+        if self.state[name].function:
+            self.state[name].run()
 
     def checkNext(self):
         cur = self.state[self.cur]
@@ -95,7 +111,9 @@ class Step:
     # which can give it the ability to check other variables
     # or just allow the controller to pause and do other checks (then the controller will be specific but separate scripts should not need to reimplement the same stuff)
     def pixelCheck(self):
-        return all([util.matchColor(pix['rgb'], Context.i.getColor(*(pix['pos'])), Config.i.data['pixel_threshold']) for pix in self.pixel])
+        ret = all([util.matchColor(pix['rgb'], Context.i.getColor(*(pix['pos'])), Config.i.data['pixel_threshold']) for pix in self.pixel])
+        # can do some miss checks here
+        return ret
 
     def run(self):
         # does the actual action

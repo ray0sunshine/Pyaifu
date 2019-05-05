@@ -26,7 +26,7 @@ class Widget(QWidget):
         self.controller = Controller()
 
         self.setAttribute(Qt.WA_TranslucentBackground, True)
-        self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
+        # self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.setFixedSize(Context.i.w, Context.i.h)
         self.move(Context.i.x, Context.i.y)
