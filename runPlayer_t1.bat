@@ -1,1 +1,0 @@
-python mainPlayer_raifu.py out/grind1.json

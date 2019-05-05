@@ -6,21 +6,29 @@
 #   -Managing multiple FSMs
 # This can be called from different batch files with the necessary FSM json files locations in execution sequence
 
-from jsonSerializer import jsonSerialize
 from fsm import Machine
 from context import Context
 
 import config
 import sys
+import os
 import json
+
+
+def getData(jsonPath):
+    o = {}
+    with open(jsonPath, 'r') as config:
+        o = json.load(config)
+    return o
+
 
 config = config.Config()
 data = config.data
 Context(data['window'])
 
 files = sys.argv[1:]
+scripts = {}
 for f in files:
-    with open(f, 'r') as config:
-        o = json.load(config)
-        machine = Machine(o)
-        machine.run()
+    name, path = f.split('=')
+    scripts[name] = Machine(getData(path)) if os.path.exists(path) else path
+print(scripts)

@@ -54,15 +54,15 @@ class Machine:
     def execute(self):
         cur = self.state[self.cur]
 
+        # if screen has changed, check if new state has been reached
         while not cur.pixelCheck():
             util.wait(0)
             self.checkNext()
             return
 
-        # print(self.cur)
-        # print(cur.function)
         cur.run()
 
+        # check if new state has been entered
         functionData = cur.function['data']
         util.wait(functionData['wait'], 0.15)
         if self.checkNext():

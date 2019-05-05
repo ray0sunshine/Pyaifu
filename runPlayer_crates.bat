@@ -1,0 +1,1 @@
+python mainPlayer_raifu.py enter=out/grind1.json battle=out/battle.json end=out/end.json
