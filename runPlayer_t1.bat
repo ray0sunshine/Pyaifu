@@ -1,1 +1,1 @@
-python player_raifu.py out/enter.json
+python player_raifu.py out/grind1.json

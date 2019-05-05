@@ -38,6 +38,15 @@ class Machine:
                 return name
         return None
 
+    def checkNext(self):
+        cur = self.state[self.cur]
+        nextStep = self.checkForStates(cur.next)
+        if nextStep:
+            self.pre = self.cur
+            self.cur = nextStep
+            return True
+        return False
+
     # runs the current step/state
     # wait to enter current pixel state (check if the wait is too long)
     # makes sure that it's still on current state while retrying if needed
@@ -45,25 +54,26 @@ class Machine:
     def execute(self):
         cur = self.state[self.cur]
 
-        nextStep = self.checkForStates(cur.next)
-        if nextStep:
-            self.pre = self.cur
-            self.cur = nextStep
-            return
-
         while not cur.pixelCheck():
             util.wait(0)
+            self.checkNext()
             return
 
+        # print(self.cur)
+        # print(cur.function)
         cur.run()
 
         functionData = cur.function['data']
         util.wait(functionData['wait'], 0.15)
+        if self.checkNext():
+            return
 
         # retry loop, otherwise notify
         while cur.pixelCheck():
             cur.run()
             util.wait(functionData['retry'], 0.15)
+            if self.checkNext():
+                return
 
 
 class Step:
