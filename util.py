@@ -1,3 +1,5 @@
+import pytesseract as ts
+import re
 import numpy
 import time
 import math
@@ -141,3 +143,16 @@ def getScreen(area, filename):
 
 def alert():
     winsound.PlaySound('config/alert.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+
+
+def getScreenText(area):
+    # screenshot and convert to string (Doesn't really work on a non-mainscreen)
+    ret = ts.image_to_string(getRectAsImage(area))
+    return ret.strip()
+
+
+def getTimer(t):
+    # determines if the string matches a regex for time and returns result in seconds
+    if re.match('\d{2}:\d{2}:\d{2}', t):
+        return sum(s * d for s, d in zip([3600, 60, 1], map(int, t.split(':'))))
+    return None

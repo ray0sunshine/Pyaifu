@@ -48,6 +48,8 @@ class Widget(QWidget):
 
         self.hotkey('f1', util.alert)
         self.hotkey('f2', sys.exit)
+        self.hotkey('f3', self.controller.getLogisticTimer)
+
         self.hotkey('f5', self.controller.play)
         self.hotkey('f6', self.controller.pauseToggle)
 
