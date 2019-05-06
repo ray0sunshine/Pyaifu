@@ -33,5 +33,5 @@ class Context:
     def setFocus(self):
         handle = wgui.FindWindow(None, 'python')
         if handle:
-            win32com.client.Dispatch("WScript.Shell").SendKeys('WHY?')
+            win32com.client.Dispatch("WScript.Shell").SendKeys('')
             wgui.SetForegroundWindow(handle)

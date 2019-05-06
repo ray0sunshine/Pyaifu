@@ -80,6 +80,7 @@ class Widget(QWidget):
         self.hotkey('f8', self.removeStep)
 
         self.hotkey('f10', self.screenshotFile)
+        self.hotkey('f12', self.modifyNext)
 
         self.hotkey('ctrl+o', self.loadFile)
         self.hotkey('ctrl+s', self.saveFile)
@@ -141,6 +142,36 @@ class Widget(QWidget):
                 self, 'Set ' + kind + ' time', 'Seconds:',
                 cur['function']['data'][kind],
                 0, 180, 2)[0]
+            self.updateLabels()
+            self.update()
+
+    def modifyNext(self):
+        if self.controller.cur:
+            self.updateLabels()
+            Context.i.setFocus()
+            cur = self.controller.cur
+            output = QInputDialog.getText(
+                self, 'Set next', 'Next:',
+                text=','.join(str(n) for n in cur['next']))[0]
+            nextList = output.split(',')
+            print(nextList)
+
+            nnext = []
+            steps = self.controller.steps
+            for e in nextList:
+                try:
+                    i = int(e)
+                    if 0 <= i < len(steps):
+                        nnext.append(i)
+                    else:
+                        print(i, ' - is not a valid index')
+                except:
+                    for i in range(len(steps)):
+                        if steps[i]['name'] == e:
+                            nnext.append(i)
+            if nnext:
+                cur['next'] = nnext
+
             self.updateLabels()
             self.update()
 
