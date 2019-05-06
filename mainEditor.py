@@ -3,12 +3,13 @@ import re
 import json
 import queue
 import keyboard
+import config
+import util
+import mouse
 
 from context import Context
 from controller_editor import Controller
 from jsonSerializer import jsonSerialize
-import config
-import util
 
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -83,6 +84,11 @@ class Widget(QWidget):
         self.hotkey('ctrl+o', self.loadFile)
         self.hotkey('ctrl+s', self.saveFile)
         self.hotkey('ctrl+shift+s', self.saveFileAs)
+
+        keyboard.add_hotkey('8', mouse.mouseShift, args=(0, -1))  # up
+        keyboard.add_hotkey('4', mouse.mouseShift, args=(-1, 0))  # left
+        keyboard.add_hotkey('6', mouse.mouseShift, args=(1, 0))  # right
+        keyboard.add_hotkey('2', mouse.mouseShift, args=(0, 1))  # down
 
         timer = QTimer(self)
         timer.setSingleShot(False)

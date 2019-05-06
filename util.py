@@ -1,6 +1,7 @@
 import numpy
 import time
 import math
+import winsound
 
 from desktopmagic.screengrab_win32 import getRectAsImage
 from datetime import datetime
@@ -136,3 +137,7 @@ def getScreen(area, filename):
     if filename:
         img.save(filename + timestamp() + '.png', format='png')
     return img
+
+
+def alert():
+    winsound.PlaySound('config/alert.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
