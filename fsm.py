@@ -3,20 +3,11 @@ import mouse
 
 from config import Config
 from context import Context
-# multiple machines can be kept at the highest level and swapped between
-# these can be controlled by another config that can tell what states scripts to load
 
 
 class Machine:
-    # The driver for the states
+    blocked = False
 
-    # Map of custom functions
-    # Map of names to states (this owns all steps)
-    # Current/Previous state kept and updating
-    # Check the current pixels to match against state
-    # executes step functionality
-    # supports pause
-    # To/From json
     def __init__(self, data):
         self.state = {}
         for k, v in data['fsm'].items():
@@ -68,6 +59,9 @@ class Machine:
     # makes sure that it's still on current state while retrying if needed
     # does the action
     def execute(self):
+        if Machine.blocked:
+            return
+
         cur = self.state[self.cur]
 
         # if screen has changed, check if new state has been reached

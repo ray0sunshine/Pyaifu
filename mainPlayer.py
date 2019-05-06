@@ -11,6 +11,7 @@ import json
 import util
 import keyboard
 import queue
+import sys
 
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -46,7 +47,9 @@ class Widget(QWidget):
         self.keymap = {}
 
         self.hotkey('f1', util.alert)
-        self.hotkey('f10', self.controller.play)
+        self.hotkey('f2', sys.exit)
+        self.hotkey('f5', self.controller.play)
+        self.hotkey('f6', self.controller.pauseToggle)
 
         timer = QTimer(self)
         timer.setSingleShot(False)

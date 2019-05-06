@@ -5,6 +5,7 @@
 
 from fsm import Machine
 from context import Context
+from fsm import Machine
 
 import config
 import sys
@@ -13,6 +14,7 @@ import json
 import util
 import keyboard
 import importlib
+import threading
 
 
 class Controller:
@@ -34,4 +36,11 @@ class Controller:
         return o
 
     def play(self):
-        self.runner.play()
+        tr = threading.Thread(None, self.runner.play, 'play')
+        tr.start()
+        print('PLAY')
+
+    def pauseToggle(self):
+        # this only works while a fsm is being run normally though (not forced)
+        Machine.blocked = not Machine.blocked
+        print('PAUSE' if Machine.blocked else 'RESUME')
