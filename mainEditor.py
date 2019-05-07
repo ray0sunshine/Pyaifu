@@ -298,9 +298,10 @@ class Widget(QWidget):
     def test(self):
         # creates a temp fsm and runs once from current step
         if self.controller.cur:
+            self.setFixedSize(250, Context.i.h)
             tempMachine = Machine(self.getSerializableObject())
-            tempMachine.start = self.controller.cur['name']
-            tempMachine.run()
+            tempMachine.run(self.controller.cur['name'])
+            self.setFixedSize(Context.i.w, Context.i.h)
 
     def mark(self, color, inverse, pos):
         self.pen.setColor(QColor(*inverse))

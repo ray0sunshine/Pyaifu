@@ -16,8 +16,12 @@ class Machine:
         self.cur = data['start']
         self.pre = None
 
-    def run(self):
-        self.cur = self.start
+    def run(self, starter=None):
+        if starter:
+            self.cur = starter
+        else:
+            self.cur = self.start
+
         cur = self.state[self.cur]
         while cur.next or cur.pixelCheck():
             if not cur.function:
