@@ -8,6 +8,7 @@ import util
 import mouse
 
 from context import Context
+from fsm import Machine
 from controller_editor import Controller
 from jsonSerializer import jsonSerialize
 
@@ -27,7 +28,7 @@ class Widget(QWidget):
         self.controller = Controller()
 
         self.setAttribute(Qt.WA_TranslucentBackground, True)
-        # self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
+        self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.setFixedSize(Context.i.w, Context.i.h)
         self.move(Context.i.x, Context.i.y)
@@ -81,10 +82,14 @@ class Widget(QWidget):
 
         self.hotkey('f10', self.screenshotFile)
         self.hotkey('f12', self.modifyNext)
+        self.hotkey('ctrl+f12', self.rename)
 
         self.hotkey('ctrl+o', self.loadFile)
         self.hotkey('ctrl+s', self.saveFile)
         self.hotkey('ctrl+shift+s', self.saveFileAs)
+
+        self.hotkey('ctrl+q', sys.exit)
+        self.hotkey('ctrl+a', self.test)
 
         keyboard.add_hotkey('8', mouse.mouseShift, args=(0, -1))  # up
         keyboard.add_hotkey('4', mouse.mouseShift, args=(-1, 0))  # left
@@ -145,16 +150,25 @@ class Widget(QWidget):
             self.updateLabels()
             self.update()
 
+    def rename(self):
+        if self.controller.cur:
+            Context.i.setFocus()
+            cur = self.controller.cur
+            name = QInputDialog.getText(
+                self, 'Set name', 'Name:',
+                text=cur['name'])[0]
+            cur['name'] = name if name else cur['name']
+            self.updateLabels()
+            self.update()
+
     def modifyNext(self):
         if self.controller.cur:
-            self.updateLabels()
             Context.i.setFocus()
             cur = self.controller.cur
             output = QInputDialog.getText(
                 self, 'Set next', 'Next:',
                 text=','.join(str(n) for n in cur['next']))[0]
             nextList = output.split(',')
-            print(nextList)
 
             nnext = []
             steps = self.controller.steps
@@ -189,18 +203,12 @@ class Widget(QWidget):
         for i in range(len(self.labels)):
             ql = self.labels[i]
             cur = self.controller.steps[i]
-            name = ''
-            if not ql.text() == '':
-                name = re.search('<(.+?)>', ql.text()).group(1)
-                cur['name'] = name
-            else:
-                name = cur['name']
 
             # do unique check
-            if name in encounteredNames:
-                print('"' + name + '" is a dupe: i=' + str(i))
+            if cur['name'] in encounteredNames:
+                print('"' + cur['name'] + '" is a dupe: i=' + str(i))
             else:
-                encounteredNames.add(name)
+                encounteredNames.add(cur['name'])
 
             appendix = ''
             if cur['function']:
@@ -268,6 +276,10 @@ class Widget(QWidget):
             self.saveFileAs()
 
     def save(self):
+        with open(self.filename, 'w') as config:
+            config.write(jsonSerialize(self.getSerializableObject()))
+
+    def getSerializableObject(self):
         self.updateLabels()
         steps = self.controller.steps
         o = {
@@ -281,9 +293,14 @@ class Widget(QWidget):
                 'function': step['function'],
                 'next': [steps[i]['name'] for i in step['next']]
             }
+        return o
 
-        with open(self.filename, 'w') as config:
-            config.write(jsonSerialize(o))
+    def test(self):
+        # creates a temp fsm and runs once from current step
+        if self.controller.cur:
+            tempMachine = Machine(self.getSerializableObject())
+            tempMachine.start = self.controller.cur['name']
+            tempMachine.run()
 
     def mark(self, color, inverse, pos):
         self.pen.setColor(QColor(*inverse))

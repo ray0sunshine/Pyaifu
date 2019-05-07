@@ -6,7 +6,6 @@
 
 from fsm import Machine
 from context import Context
-from fsm import Machine
 
 import config
 import sys
