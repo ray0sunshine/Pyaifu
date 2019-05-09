@@ -1,7 +1,7 @@
 # Main ui and controls for the player
 
 from helper.context import Context
-from controller_player import Controller
+from helper.controller_player import Controller
 
 import helper.config as config
 import sys

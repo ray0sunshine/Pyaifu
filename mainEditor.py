@@ -8,7 +8,7 @@ import helper.mouse as mouse
 
 from helper.context import Context
 from helper.fsm import Machine
-from controller_editor import Controller
+from helper.controller_editor import Controller
 from helper.jsonSerializer import jsonSerialize
 
 from PyQt5.QtGui import *
