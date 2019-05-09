@@ -1,6 +1,6 @@
-from context import Context
-import mouse
-import util
+from helper.context import Context
+import helper.mouse as mouse
+import helper.util as util
 import numpy
 
 from PyQt5.QtGui import *

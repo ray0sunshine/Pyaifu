@@ -1,7 +1,7 @@
 import json
 import os
 
-main_config = 'config/main_config.json'
+main_config = 'helper/config/main_config.json'
 
 
 class Config:

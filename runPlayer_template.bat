@@ -1,1 +1,0 @@
-python mainPlayer.py runner=runner_template

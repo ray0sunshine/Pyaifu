@@ -1,5 +1,4 @@
 *.pyc
 .vscode/*
-out/*
-config/*
 02/*
+crates/*

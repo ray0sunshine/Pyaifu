@@ -4,17 +4,16 @@
 
 # Possibly: Statistics like delay increase and such function
 
-from fsm import Machine
-from context import Context
+from helper.fsm import Machine
+from helper.context import Context
 
-import config
-import sys
 import os
 import json
-import util
-import keyboard
+import helper.util as util
 import importlib
 import threading
+
+config_path = 'helper/config/'
 
 
 class Controller:
@@ -28,7 +27,9 @@ class Controller:
         for f in files:
             name, path = f.split('=')
             self.scripts[name] = Machine(self.getData(path)) if os.path.exists(path) else path
-        self.scripts['common'] = Machine(self.getData('config/common.json'))
+        self.scripts['common'] = Machine(self.getData(config_path + 'common.json'))
+        self.scripts['seq1'] = Machine(self.getData(config_path + 'teamSelectSeq1.json'))
+        self.scripts['seq2'] = Machine(self.getData(config_path + 'teamSelectSeq2.json'))
 
         runner = importlib.import_module(self.scripts['runner'], package=None)
         self.runner = runner.Runner(self)

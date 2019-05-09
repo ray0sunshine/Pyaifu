@@ -142,7 +142,7 @@ def getScreen(area, filename):
 
 
 def alert():
-    winsound.PlaySound('config/alert.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
+    winsound.PlaySound('helper/config/alert.wav', winsound.SND_FILENAME | winsound.SND_ASYNC)
 
 
 def getScreenText(area):

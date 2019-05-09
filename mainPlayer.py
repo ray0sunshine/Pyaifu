@@ -1,17 +1,13 @@
 # Main ui and controls for the player
 
-from fsm import Machine
-from context import Context
+from helper.context import Context
 from controller_player import Controller
 
-import config
+import helper.config as config
 import sys
-import os
-import json
-import util
+import helper.util as util
 import keyboard
 import queue
-import sys
 
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *

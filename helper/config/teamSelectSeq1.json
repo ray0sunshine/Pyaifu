@@ -1,0 +1,258 @@
+{
+    "start": "seq 1",
+    "fsm": {
+        "seq 1": {
+            "name": "seq 1",
+            "pixel": [
+                {"pos": [984, 495], "rgb": [41, 44, 41]},
+                {"pos": [984, 541], "rgb": [255, 138, 0]},
+                {"pos": [985, 585], "rgb": [41, 44, 41]},
+                {"pos": [1285, 928], "rgb": [206, 203, 206]},
+                {"pos": [1564, 927], "rgb": [206, 97, 0]}
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1049, 196],
+                        [1553, 285]
+                    ]
+                }
+            },
+            "next": [
+                "state 1"
+            ]
+        },
+        "state 1": {
+            "name": "state 1",
+            "pixel": [
+                {"pos": [1021, 242], "rgb": [255, 125, 0]}
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1352, 920],
+                        [1563, 996]
+                    ]
+                }
+            },
+            "next": [
+                "forced already",
+                "unforced yet",
+                "selected"
+            ]
+        },
+        "unforced yet": {
+            "name": "unforced yet",
+            "pixel": [
+                {"pos": [742, 664], "rgb": [255, 255, 255]},
+                {"pos": [1126, 666], "rgb": [255, 223, 0]},
+                {"pos": [783, 582], "rgb": [255, 255, 255]}
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [782, 582],
+                        [822, 620]
+                    ]
+                }
+            },
+            "next": [
+                "forced already"
+            ]
+        },
+        "forced already": {
+            "name": "forced already",
+            "pixel": [
+                {"pos": [745, 666], "rgb": [255, 255, 255]},
+                {"pos": [1138, 667], "rgb": [255, 223, 0]},
+                {"pos": [783, 582], "rgb": [255, 178, 0]}
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1050, 660],
+                        [1204, 709]
+                    ]
+                }
+            },
+            "next": [
+                "selected"
+            ]
+        },
+        "selected": {
+            "name": "selected",
+            "pixel": [
+                {"pos": [1577, 425], "rgb": [255, 125, 0]},
+                {"pos": [1490, 786], "rgb": [255, 178, 0]},
+                {"pos": [1318, 788], "rgb": [255, 255, 255]},
+                {"pos": [1441, 210], "rgb": [33, 32, 33]},
+                {"pos": [1601, 206], "rgb": [16, 56, 74]}
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1410, 783],
+                        [1564, 872]
+                    ]
+                }
+            },
+            "next": [
+                "state 5",
+                "go back"
+            ]
+        },
+        "go back": {
+            "name": "go back",
+            "pixel": [
+                {"pos": [383, 311], "rgb": [255, 182, 0]},
+                {"pos": [382, 218], "rgb": [255, 255, 255]},
+                {"pos": [1518, 327], "rgb": [24, 24, 24]},
+                {"pos": [1572, 327], "rgb": [8, 52, 74]}
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [279, 43],
+                        [401, 122]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "state 5": {
+            "name": "state 5",
+            "pixel": [
+                {"pos": [376, 218], "rgb": [255, 182, 0]},
+                {"pos": [383, 312], "rgb": [255, 255, 255]},
+                {"pos": [1569, 329], "rgb": [8, 52, 74]},
+                {"pos": [1490, 328], "rgb": [24, 24, 24]}
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [276, 282],
+                        [385, 340]
+                    ]
+                }
+            },
+            "next": [
+                "state 6"
+            ]
+        },
+        "state 6": {
+            "name": "state 6",
+            "pixel": [
+                {"pos": [384, 310], "rgb": [255, 182, 0]},
+                {"pos": [379, 222], "rgb": [255, 255, 255]},
+                {"pos": [1571, 329], "rgb": [8, 52, 74]},
+                {"pos": [1497, 328], "rgb": [24, 24, 24]}
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1599, 890],
+                        [1410, 838]
+                    ]
+                }
+            },
+            "next": [
+                "state 7",
+                "state 10"
+            ]
+        },
+        "state 10": {
+            "name": "state 10",
+            "pixel": [
+                {"pos": [1602, 210], "rgb": [16, 56, 74]},
+                {"pos": [1443, 208], "rgb": [33, 32, 33]},
+                {"pos": [1364, 784], "rgb": [255, 255, 255]},
+                {"pos": [1556, 786], "rgb": [255, 178, 0]},
+                {"pos": [1578, 424], "rgb": [255, 125, 0]}
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1599, 490],
+                        [1531, 411]
+                    ]
+                }
+            },
+            "next": [
+                "state 7"
+            ]
+        },
+        "state 7": {
+            "name": "state 7",
+            "pixel": [
+                {"pos": [985, 495], "rgb": [41, 44, 41]},
+                {"pos": [984, 541], "rgb": [255, 138, 0]},
+                {"pos": [989, 584], "rgb": [41, 41, 41]},
+                {"pos": [1289, 930], "rgb": [206, 203, 206]},
+                {"pos": [1560, 931], "rgb": [206, 97, 0]}
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1041, 449],
+                        [1568, 543]
+                    ]
+                }
+            },
+            "next": [
+                "state 8"
+            ]
+        },
+        "state 8": {
+            "name": "state 8",
+            "pixel": [
+                {"pos": [1021, 495], "rgb": [255, 125, 0]}
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1341, 917],
+                        [1569, 999]
+                    ]
+                }
+            },
+            "next": [
+                "forced already",
+                "unforced yet",
+                "selected"
+            ]
+        }
+    }
+}

@@ -1,9 +1,9 @@
 import pyautogui as gui
 import ctypes
 
-import util
+import helper.util as util
 
-from context import Context
+from helper.context import Context
 
 MOUSEEVENTF_MOVE = 0x0001        # mouse move
 MOUSEEVENTF_LEFTDOWN = 0x0002    # left button down

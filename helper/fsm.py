@@ -1,8 +1,8 @@
-import util
-import mouse
+import helper.util as util
+import helper.mouse as mouse
 
-from config import Config
-from context import Context
+from helper.config import Config
+from helper.context import Context
 
 
 class Machine:

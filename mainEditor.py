@@ -1,16 +1,15 @@
 import sys
-import re
 import json
 import queue
 import keyboard
-import config
-import util
-import mouse
+import helper.config as config
+import helper.util as util
+import helper.mouse as mouse
 
-from context import Context
-from fsm import Machine
+from helper.context import Context
+from helper.fsm import Machine
 from controller_editor import Controller
-from jsonSerializer import jsonSerialize
+from helper.jsonSerializer import jsonSerialize
 
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -83,6 +82,7 @@ class Widget(QWidget):
         self.hotkey('f10', self.screenshotFile)
         self.hotkey('f12', self.modifyNext)
         self.hotkey('ctrl+f12', self.rename)
+        self.hotkey('ctrl+shift+f12', self.noNext)
 
         self.hotkey('ctrl+o', self.loadFile)
         self.hotkey('ctrl+s', self.saveFile)
@@ -186,6 +186,12 @@ class Widget(QWidget):
             if nnext:
                 cur['next'] = nnext
 
+            self.updateLabels()
+            self.update()
+
+    def noNext(self):
+        if self.controller.cur:
+            self.controller.cur['next'] = []
             self.updateLabels()
             self.update()
 
