@@ -1,1 +1,0 @@
-python mainPlayer.py runner=02.runner enter=02/enter.json setup=02/setup.json end=02/end.json
