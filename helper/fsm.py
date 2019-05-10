@@ -1,3 +1,4 @@
+import sys
 import helper.util as util
 import helper.mouse as mouse
 
@@ -7,6 +8,7 @@ from helper.context import Context
 
 class Machine:
     blocked = False
+    dead = False
 
     def __init__(self, data):
         self.state = {}
@@ -65,6 +67,8 @@ class Machine:
     def execute(self):
         if Machine.blocked:
             return
+        elif Machine.dead:
+            sys.exit()
 
         cur = self.state[self.cur]
 

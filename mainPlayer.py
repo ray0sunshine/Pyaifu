@@ -43,7 +43,7 @@ class Widget(QWidget):
         self.keymap = {}
 
         self.hotkey('f1', util.alert)
-        self.hotkey('f2', sys.exit)
+        self.hotkey('f2', self.kill)
         self.hotkey('f3', self.controller.getLogisticTimer)
 
         self.hotkey('f5', self.controller.play)
@@ -71,6 +71,10 @@ class Widget(QWidget):
         qp.setBrush(QColor(0, 0, 0, 128))
         qp.drawRect(0, 0, 250, 500)
         qp.end()
+
+    def kill(self):
+        self.controller.kill()
+        sys.exit()
 
 
 app = QApplication(sys.argv)

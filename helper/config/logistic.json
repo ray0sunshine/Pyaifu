@@ -1,0 +1,35 @@
+{
+    "start": "logi1",
+    "fsm": {
+        "logi1": {
+            "name": "logi1",
+            "pixel": [
+                {"pos": [1602, 40], "rgb": [198, 203, 57]},
+                {"pos": [1591, 53], "rgb": [148, 162, 41]}
+            ],
+            "function": {},
+            "next": [
+                "logi2"
+            ]
+        },
+        "logi2": {
+            "name": "logi2",
+            "pixel": [
+                {"pos": [1601, 40], "rgb": [99, 105, 24]},
+                {"pos": [1592, 53], "rgb": [74, 85, 16]}
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.3,
+                    "retry": 0.3,
+                    "points": [
+                        [1129, 709],
+                        [970, 654]
+                    ]
+                }
+            },
+            "next": []
+        }
+    }
+}

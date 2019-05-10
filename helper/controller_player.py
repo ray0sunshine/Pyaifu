@@ -6,8 +6,10 @@
 
 from helper.fsm import Machine
 from helper.context import Context
+from helper.config import Config
 
 import os
+import sys
 import json
 import helper.util as util
 import importlib
@@ -17,11 +19,19 @@ config_path = 'helper/config/'
 
 
 class Controller:
+    state = {
+        'logistic': [0, 0, 0, 0],
+        'waiting': 0,
+        'repairLoop': 0,
+        'repairLoopComplete': 0,
+        'bigLoop': 1,
+        'bigLoopComplete': 0,
+        'smallLoop': 10,
+        'smallLoopComplete': 0,
+        'runtime': 0
+    }
+
     def __init__(self, files):
-        self.state = {
-            'playing': False,
-            'logistic': [0, 0, 0, 0]
-        }
         self.scripts = {}
 
         for f in files:
@@ -30,9 +40,13 @@ class Controller:
         self.scripts['common'] = Machine(self.getData(config_path + 'common.json'))
         self.scripts['seq1'] = Machine(self.getData(config_path + 'teamSelectSeq1.json'))
         self.scripts['seq2'] = Machine(self.getData(config_path + 'teamSelectSeq2.json'))
+        self.scripts['logi'] = Machine(self.getData(config_path + 'logistic.json'))
 
         runner = importlib.import_module(self.scripts['runner'], package=None)
         self.runner = runner.Runner(self)
+
+        tr = threading.Thread(None, self.loopLogi, 'logi')
+        tr.start()
 
     def getData(self, jsonPath):
         o = {}
@@ -41,14 +55,38 @@ class Controller:
         return o
 
     def play(self):
-        tr = threading.Thread(None, self.runner.play, 'play')
+        tr = threading.Thread(None, self.playThread, 'play')
         tr.start()
         print('PLAY')
+
+    def playThread(self):
+        # do the big loops
+        self.runner.play()
+        util.alert()
 
     def pauseToggle(self):
         # this only works while a fsm is being run normally though (not forced)
         Machine.blocked = not Machine.blocked
         print('PAUSE' if Machine.blocked else 'RESUME')
+
+    def kill(self):
+        Machine.dead = True
+
+    def loopLogi(self):
+        m = self.scripts['logi']
+        while True:
+            if Machine.dead:
+                sys.exit()
+
+            if m.checkState('logi1') or m.checkState('logi2'):
+                Controller.state['waiting'] = max(0, Controller.state['waiting'] - 1)
+                while m.checkState('logi1') or m.checkState('logi2'):
+                    m.forceRun('logi2')
+                    if m.checkState('logi1'):
+                        util.wait(0.4)
+                    elif m.checkState('logi2'):
+                        util.wait(0.2)
+            util.wait(0.4)
 
     def openLogi(self):
         m = self.scripts['common']
@@ -84,7 +122,6 @@ class Controller:
             while remaining is None:
                 self.openLogi()
                 remaining = util.getTimer(util.getScreenText(convertedRegion))
-            self.state['logistic'][i] = remaining
-        print(self.state['logistic'])
-
+            Controller.state['logistic'][i] = remaining
+        Controller.state['waiting'] = sum(1 for t in Controller.state['logistic'] if t <= Config.i.data['min_time'])
         self.closeLogi()

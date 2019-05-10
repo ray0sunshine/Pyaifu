@@ -121,7 +121,7 @@ def wait(t, dev=-1):
     if dev < 0:
         # undefined deviance to automically add a bit of random
         # the deviation of a predefined time is scaled up to a max of 1.5s (3 second range for any length of time)
-        t = max(normalRange(0.05, 0.15), normalRange2(t, min(1.5, t * 0.2)))
+        t = max(normalRange(0.05, 0.15), normalRange2(t, min(1.5, t * 0.25)))
     elif dev > 0:
         # defined non zero deviance
         t = max(0.001, normalRange2(t, dev))

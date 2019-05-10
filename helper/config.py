@@ -11,7 +11,8 @@ class Config:
         'window',
         'user',
         'pass',
-        'pixel_threshold'
+        'pixel_threshold',
+        'min_time'
     ]
 
     def __init__(self):
