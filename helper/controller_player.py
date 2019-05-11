@@ -29,7 +29,7 @@ class Controller:
         'bigLoopComplete': 0,
         'smallLoop': 10,
         'smallLoopComplete': 0,
-        'runtime': 0
+        'runtime': time.time()
     }
 
     def __init__(self, files):
@@ -58,11 +58,14 @@ class Controller:
     def play(self):
         tr = threading.Thread(None, self.playThread, 'play')
         tr.start()
+        Controller.state['runtime'] = time.time()
         print('PLAY')
 
     def playThread(self):
         # do the big loops
         self.runner.play()
+        t = time.time() - Controller.state['runtime']
+        print('RUNTIME: ' + str(t) + 's (' + str(round(t / 60, 1)) + ' min)')
         util.alert()
 
     def pauseToggle(self):
@@ -138,3 +141,9 @@ class Controller:
             remaining = util.getTimer(util.getScreenText(convertedRegion))
         remaining = round(time.time() + remaining)
         Controller.state['logistic'][i] = remaining
+
+    def increment(self, name):
+        Controller.state[name] += 1
+
+    def decrement(self, name):
+        Controller.state[name] = max(0, Controller.state[name] - 1)

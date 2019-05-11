@@ -23,7 +23,7 @@ labelTemplate = {
     'Small cycle (F5, F6)': lambda: str(Controller.state['smallLoopComplete']) + ' / ' + str(Controller.state['smallLoop']),
     'Big cycle (F7, F8)': lambda: str(Controller.state['bigLoopComplete']) + ' / ' + str(Controller.state['bigLoop']),
     'Repair (ctrl+F7, ctrl+F8)': lambda: str(Controller.state['repairLoopComplete']) + ' / ' + str(Controller.state['repairLoop']),
-    'Runtime': lambda: str(Controller.state['runtime']),
+    'Runtime': lambda: str(round(time.time() - Controller.state['runtime'])) + 's (' + str(round((time.time() - Controller.state['runtime']) / 60, 1)) + ' min)',
     'Running (F2)': lambda: 'PAUSED' if Machine.blocked else 'RUNNING',
     'Waiting': lambda: str(Controller.state['waiting']),
     'Logistics (F3)': lambda: '\n' + '\n'.join(str(round(t)) + 's (' + str(round(t / 60, 1)) + ' min)' for t in [remain - time.time() for remain in Controller.state['logistic']])
@@ -59,10 +59,18 @@ class Widget(QWidget):
 
     def initKeys(self):
         self.keymap = {}
+        self.argmap = {}
 
         self.hotkey('f1', self.controller.play)
         self.hotkey('f2', self.controller.pauseToggle)
         self.hotkey('f3', self.getLogiTimer)
+
+        self.hotkey('f5', self.controller.decrement, ['smallLoop'])
+        self.hotkey('f6', self.controller.increment, ['smallLoop'])
+        self.hotkey('f7', self.controller.decrement, ['bigLoop'])
+        self.hotkey('f8', self.controller.increment, ['bigLoop'])
+        self.hotkey('ctrl+f7', self.controller.decrement, ['repairLoop'])
+        self.hotkey('ctrl+f8', self.controller.increment, ['repairLoop'])
 
         self.hotkey('f12', self.kill)
 
@@ -71,15 +79,19 @@ class Widget(QWidget):
         timer.timeout.connect(self.update)
         timer.start(40)
 
-    def hotkey(self, seq, fn):
+    def hotkey(self, seq, fn, args=None):
         keyboard.add_hotkey(seq, q.put, [seq])
         self.keymap[seq] = fn
+        self.argmap[seq] = args
 
     def processKey(self):
         while not q.empty():
             seq = q.get(False)
             if(seq):
-                self.keymap[seq]()
+                if self.argmap[seq]:
+                    self.keymap[seq](*(self.argmap[seq]))
+                else:
+                    self.keymap[seq]()
 
     def addLabel(self):
         label = QLabel()
