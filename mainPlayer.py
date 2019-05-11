@@ -20,7 +20,7 @@ q = queue.Queue()
 
 labelTemplate = {
     'time': lambda: str(time.ctime()),
-    'Small cycle (F5, F6)': lambda: str(Controller.state['smallLoopComplete']) + ' / ' + str(Controller.state['smallLoop']),
+    'Small cycle (F5, F6)': lambda: str(round(Controller.state['smallLoopComplete'], 1)) + ' / ' + str(Controller.state['smallLoop']),
     'Big cycle (F7, F8)': lambda: str(Controller.state['bigLoopComplete']) + ' / ' + str(Controller.state['bigLoop']),
     'Repair (ctrl+F7, ctrl+F8)': lambda: str(Controller.state['repairLoopComplete']) + ' / ' + str(Controller.state['repairLoop']),
     'Runtime': lambda: str(round(time.time() - Controller.state['runtime'])) + 's (' + str(round((time.time() - Controller.state['runtime']) / 60, 1)) + ' min)',
