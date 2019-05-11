@@ -11,6 +11,7 @@ from helper.config import Config
 import os
 import sys
 import json
+import time
 import helper.util as util
 import importlib
 import threading
@@ -20,7 +21,7 @@ config_path = 'helper/config/'
 
 class Controller:
     state = {
-        'logistic': [0, 0, 0, 0],
+        'logistic': [time.time()] * 4,
         'waiting': 0,
         'repairLoop': 0,
         'repairLoopComplete': 0,
@@ -104,24 +105,36 @@ class Controller:
         # maybe make this mult
         m = self.scripts['common']
         m.waitState('home')
-        self.openLogi()
 
+        self.openLogi()
+        ts = []
+        for i in range(4):
+            tr = threading.Thread(None, self.getSingleLogisticTimer, 'logi' + str(i), args=[i])
+            ts.append(tr)
+            tr.start()
+
+        for t in ts:
+            t.join()
+
+        Controller.state['waiting'] = sum(1 for t in Controller.state['logistic'] if round(t - time.time()) < Config.i.data['min_time'])
+        self.closeLogi()
+
+    def getSingleLogisticTimer(self, i):
         # do ocr
         coord = [833, 148, 998, 187]    # TL and BR of first box
         offset = [0, 113, 225, 338]     # y offsets from top location
-        for i in range(4):
-            xoff = Context.i.x
-            yoff = Context.i.y + offset[i]
-            convertedRegion = (
-                coord[0] + xoff,
-                coord[1] + yoff,
-                coord[2] + xoff,
-                coord[3] + yoff
-            )
+
+        xoff = Context.i.x
+        yoff = Context.i.y + offset[i]
+        convertedRegion = (
+            coord[0] + xoff,
+            coord[1] + yoff,
+            coord[2] + xoff,
+            coord[3] + yoff
+        )
+        remaining = util.getTimer(util.getScreenText(convertedRegion))
+        while remaining is None:
+            self.openLogi()
             remaining = util.getTimer(util.getScreenText(convertedRegion))
-            while remaining is None:
-                self.openLogi()
-                remaining = util.getTimer(util.getScreenText(convertedRegion))
-            Controller.state['logistic'][i] = remaining
-        Controller.state['waiting'] = sum(1 for t in Controller.state['logistic'] if t <= Config.i.data['min_time'])
-        self.closeLogi()
+        remaining = round(time.time() + remaining)
+        Controller.state['logistic'][i] = remaining
