@@ -1,0 +1,242 @@
+{
+    "start": "end small loop",
+    "fsm": {
+        "end small loop": {
+            "name": "end small loop",
+            "pixel": [
+                {"pos": [463, 793], "rgb": [239, 170, 0]},
+                {"pos": [414, 757], "rgb": [255, 212, 0]},
+                {"pos": [1601, 40], "rgb": [255, 219, 107]},
+                {"pos": [1592, 54], "rgb": [255, 190, 99]},
+                {"pos": [329, 495], "rgb": [255, 255, 255]},
+                {"pos": [326, 548], "rgb": [255, 255, 255]}
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.3,
+                    "retry": 0.3,
+                    "points": [
+                        [700, 627],
+                        [544, 542]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "loading": {
+            "name": "loading",
+            "pixel": [
+                {"pos": [730, 294], "rgb": [66, 69, 66]},
+                {"pos": [893, 294], "rgb": [66, 69, 66]},
+                {"pos": [1075, 295], "rgb": [66, 69, 66]},
+                {"pos": [885, 459], "rgb": [198, 195, 198]}
+            ],
+            "function": {},
+            "next": []
+        },
+        "end big loop": {
+            "name": "end big loop",
+            "pixel": [
+                {"pos": [1600, 41], "rgb": [255, 219, 107]},
+                {"pos": [1591, 53], "rgb": [255, 190, 99]},
+                {"pos": [327, 494], "rgb": [255, 255, 255]},
+                {"pos": [326, 551], "rgb": [255, 255, 255]},
+                {"pos": [412, 756], "rgb": [255, 209, 3]},
+                {"pos": [464, 788], "rgb": [247, 170, 0]}
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.3,
+                    "retry": 0.3,
+                    "points": [
+                        [292, 228],
+                        [427, 269]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "rc0": {
+            "name": "rc0",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "circle",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [687, 605],
+                        [629, 552]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "rc1": {
+            "name": "rc1",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "circle",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [848, 423],
+                        [790, 363]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "rc2": {
+            "name": "rc2",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "circle",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1197, 386],
+                        [1150, 334]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "rc3": {
+            "name": "rc3",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "circle",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1064, 516],
+                        [1020, 474]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "rc4": {
+            "name": "rc4",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "circle",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1344, 619],
+                        [1296, 567]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "rc5": {
+            "name": "rc5",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "circle",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1208, 780],
+                        [1158, 728]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "rc6": {
+            "name": "rc6",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "circle",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1067, 848],
+                        [1009, 788]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "rc7": {
+            "name": "rc7",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "circle",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [794, 781],
+                        [725, 723]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "rc8": {
+            "name": "rc8",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "circle",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [616, 815],
+                        [561, 766]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "rc9": {
+            "name": "rc9",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "circle",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [946, 676],
+                        [890, 612]
+                    ]
+                }
+            },
+            "next": []
+        }
+    }
+}

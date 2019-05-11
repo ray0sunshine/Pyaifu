@@ -12,7 +12,9 @@ import os
 import sys
 import json
 import time
+import random
 import helper.util as util
+import helper.mouse as mouse
 import importlib
 import threading
 
@@ -29,7 +31,8 @@ class Controller:
         'bigLoopComplete': 0,
         'smallLoop': 10,
         'smallLoopComplete': 0,
-        'runtime': time.time()
+        'runtime': time.time(),
+        'sequence': 0
     }
 
     def __init__(self, files):
@@ -39,9 +42,11 @@ class Controller:
             name, path = f.split('=')
             self.scripts[name] = Machine(self.getData(path)) if os.path.exists(path) else path
         self.scripts['common'] = Machine(self.getData(config_path + 'common.json'))
+        self.scripts['fight'] = Machine(self.getData(config_path + 'commonBattle.json'))
         self.scripts['seq1'] = Machine(self.getData(config_path + 'teamSelectSeq1.json'))
         self.scripts['seq2'] = Machine(self.getData(config_path + 'teamSelectSeq2.json'))
         self.scripts['logi'] = Machine(self.getData(config_path + 'logistic.json'))
+        self.scripts['end'] = Machine(self.getData(config_path + 'end.json'))
 
         runner = importlib.import_module(self.scripts['runner'], package=None)
         self.runner = runner.Runner(self)
@@ -65,7 +70,7 @@ class Controller:
         # do the big loops
         self.runner.play()
         t = time.time() - Controller.state['runtime']
-        print('RUNTIME: ' + str(t) + 's (' + str(round(t / 60, 1)) + ' min)')
+        print('RUNTIME: ' + str(round(t, 1)) + 's (' + str(round(t / 60, 1)) + ' min)')
         util.alert()
 
     def pauseToggle(self):
@@ -75,6 +80,16 @@ class Controller:
 
     def kill(self):
         Machine.dead = True
+
+    def clickAway(self, toMain=False):
+        mEnd = self.scripts['end']
+        ri = random.randint(0, 9)
+        while not mEnd.checkState('loading'):
+            if toMain:
+                mEnd.forceRun('end big loop')
+            else:
+                mEnd.forceRun('rc' + str(ri))
+            util.wait(0.25)
 
     def loopLogi(self):
         m = self.scripts['logi']
@@ -142,8 +157,25 @@ class Controller:
         remaining = round(time.time() + remaining)
         Controller.state['logistic'][i] = remaining
 
-    def increment(self, name):
-        Controller.state[name] += 1
+    def withdraw(self, grid):
+        m = self.scripts['fight']
+        m.forceRun('g' + str(grid))
+        util.wait(0.2)
+        m.forceRun('withdraw')
+        util.wait(0.2)
 
-    def decrement(self, name):
-        Controller.state[name] = max(0, Controller.state[name] - 1)
+    def swap(self, gFrom, gTo):
+        m = self.scripts['fight']
+        pFrom = m.state['g' + str(gFrom)].function['data']['points']
+        pTo = m.state['g' + str(gTo)].function['data']['points']
+        mouse.rDrag(*pFrom, *pTo, delay=0.15)
+        util.wait(0.2)
+
+    def increment(self, name, amount=1):
+        Controller.state[name] += amount
+
+    def decrement(self, name, amount=1):
+        Controller.state[name] = max(0, Controller.state[name] - amount)
+
+    def toggleSequence(self):
+        Controller.state['sequence'] = (Controller.state['sequence'] + 1) % 2

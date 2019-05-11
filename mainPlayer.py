@@ -25,6 +25,7 @@ labelTemplate = {
     'Repair (ctrl+F7, ctrl+F8)': lambda: str(Controller.state['repairLoopComplete']) + ' / ' + str(Controller.state['repairLoop']),
     'Runtime': lambda: str(round(time.time() - Controller.state['runtime'])) + 's (' + str(round((time.time() - Controller.state['runtime']) / 60, 1)) + ' min)',
     'Running (F2)': lambda: 'PAUSED' if Machine.blocked else 'RUNNING',
+    'Sequence (F4)': lambda: str(Controller.state['sequence']),
     'Waiting': lambda: str(Controller.state['waiting']),
     'Logistics (F3)': lambda: '\n' + '\n'.join(str(round(t)) + 's (' + str(round(t / 60, 1)) + ' min)' for t in [remain - time.time() for remain in Controller.state['logistic']])
 }
@@ -64,9 +65,12 @@ class Widget(QWidget):
         self.hotkey('f1', self.controller.play)
         self.hotkey('f2', self.controller.pauseToggle)
         self.hotkey('f3', self.getLogiTimer)
+        self.hotkey('f4', self.controller.toggleSequence)
 
         self.hotkey('f5', self.controller.decrement, ['smallLoop'])
         self.hotkey('f6', self.controller.increment, ['smallLoop'])
+        self.hotkey('shift+f5', self.controller.decrement, ['smallLoop', 0.5])
+        self.hotkey('shift+f6', self.controller.increment, ['smallLoop', 0.5])
         self.hotkey('f7', self.controller.decrement, ['bigLoop'])
         self.hotkey('f8', self.controller.increment, ['bigLoop'])
         self.hotkey('ctrl+f7', self.controller.decrement, ['repairLoop'])

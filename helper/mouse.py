@@ -69,7 +69,7 @@ def middleClick():
     ctypes.windll.user32.mouse_event(MOUSEEVENTF_MIDDLEDOWN | MOUSEEVENTF_MIDDLEUP, 0, 0, 0, 0)
 
 
-def rDrag(p1a, p1b, p4a, p4b, delay=0.5, hold=0.01):
+def rDrag(p1a, p1b, p4a, p4b, delay=0.3, hold=0.05):
     p1, p2, p3, p4 = util.cubicRandomPoints(p1a, p1b, p4a, p4b)
     mouseTo(p1)
     mouseDown()

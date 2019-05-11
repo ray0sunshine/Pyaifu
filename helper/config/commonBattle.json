@@ -1,0 +1,341 @@
+{
+    "start": "g7",
+    "fsm": {
+        "g7": {
+            "name": "g7",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [555, 495],
+                        [500, 459]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "g8": {
+            "name": "g8",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [709, 491],
+                        [658, 461]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "g9": {
+            "name": "g9",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [870, 493],
+                        [814, 460]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "g4": {
+            "name": "g4",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [457, 602],
+                        [413, 557]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "g5": {
+            "name": "g5",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [658, 602],
+                        [602, 555]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "g6": {
+            "name": "g6",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [859, 601],
+                        [790, 556]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "g1": {
+            "name": "g1",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [380, 733],
+                        [309, 683]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "g2": {
+            "name": "g2",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [598, 758],
+                        [530, 695]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "g3": {
+            "name": "g3",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [837, 762],
+                        [758, 698]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "withdraw": {
+            "name": "withdraw",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [455, 223],
+                        [332, 182]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "in combat": {
+            "name": "in combat",
+            "pixel": [
+                {"pos": [935, 48], "rgb": [255, 255, 255]},
+                {"pos": [944, 48], "rgb": [255, 255, 255]},
+                {"pos": [939, 51], "rgb": [255, 186, 0]},
+                {"pos": [927, 51], "rgb": [255, 186, 0]},
+                {"pos": [951, 51], "rgb": [255, 186, 0]}
+            ],
+            "function": {},
+            "next": []
+        },
+        "pause": {
+            "name": "pause",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [967, 57],
+                        [911, 40]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "skill": {
+            "name": "skill",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "circle",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1589, 154],
+                        [1510, 159]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "apps": {
+            "name": "apps",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1914, 1045],
+                        [1884, 1015]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "s1": {
+            "name": "s1",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [610, 1023],
+                        [492, 953]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "s2": {
+            "name": "s2",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [804, 1023],
+                        [681, 952]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "s3": {
+            "name": "s3",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1006, 1025],
+                        [871, 952]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "s4": {
+            "name": "s4",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1205, 1021],
+                        [1067, 955]
+                    ]
+                }
+            },
+            "next": []
+        },
+        "s5": {
+            "name": "s5",
+            "pixel": [
+
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 0.75,
+                    "retry": 1.5,
+                    "points": [
+                        [1397, 1021],
+                        [1266, 954]
+                    ]
+                }
+            },
+            "next": []
+        }
+    }
+}
