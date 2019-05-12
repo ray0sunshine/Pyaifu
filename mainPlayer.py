@@ -76,6 +76,8 @@ class Widget(QWidget):
         self.hotkey('ctrl+f7', self.controller.decrement, ['repairLoop'])
         self.hotkey('ctrl+f8', self.controller.increment, ['repairLoop'])
 
+        self.hotkey('f10', self.controller.login)
+        self.hotkey('ctrl+f10', self.controller.restart)
         self.hotkey('f12', self.kill)
 
         timer = QTimer(self)

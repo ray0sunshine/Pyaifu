@@ -17,6 +17,7 @@ import helper.util as util
 import helper.mouse as mouse
 import importlib
 import threading
+import keyboard
 
 config_path = 'helper/config/'
 
@@ -47,6 +48,7 @@ class Controller:
         self.scripts['seq2'] = Machine(self.getData(config_path + 'teamSelectSeq2.json'))
         self.scripts['logi'] = Machine(self.getData(config_path + 'logistic.json'))
         self.scripts['end'] = Machine(self.getData(config_path + 'end.json'))
+        self.scripts['login'] = Machine(self.getData(config_path + 'login.json'))
 
         runner = importlib.import_module(self.scripts['runner'], package=None)
         self.runner = runner.Runner(self)
@@ -179,3 +181,15 @@ class Controller:
 
     def toggleSequence(self):
         Controller.state['sequence'] = (Controller.state['sequence'] + 1) % 2
+
+    def login(self):
+        m = self.scripts['login']
+        m.run('app')
+        util.wait(1)
+        keyboard.write(Config.i.data['pass'])
+        util.wait(1)
+        m.run('press login')
+
+    def restart(self):
+        m = self.scripts['login']
+        m.run('kill app')

@@ -1,5 +1,6 @@
 *.pyc
 .vscode/*
+helper/config/main_config.json
 02/*
 crates/*
 runPlayer_*
