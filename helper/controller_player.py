@@ -49,6 +49,7 @@ class Controller:
         self.scripts['logi'] = Machine(self.getData(config_path + 'logistic.json'))
         self.scripts['end'] = Machine(self.getData(config_path + 'end.json'))
         self.scripts['login'] = Machine(self.getData(config_path + 'login.json'))
+        self.scripts['manage'] = Machine(self.getData(config_path + 'management.json'))
 
         runner = importlib.import_module(self.scripts['runner'], package=None)
         self.runner = runner.Runner(self)
@@ -70,9 +71,28 @@ class Controller:
 
     def playThread(self):
         # do the big loops
-        self.runner.play()
-        t = time.time() - Controller.state['runtime']
-        print('RUNTIME: ' + str(round(t, 1)) + 's (' + str(round(t / 60, 1)) + ' min)')
+        Controller.state['bigLoopComplete'] = 0
+        Controller.state['repairLoopComplete'] = 0
+        while Controller.state['bigLoopComplete'] < Controller.state['bigLoop']:
+            # initial check logistics
+            self.getLogisticTimer()
+            while Controller.state['waiting'] > 0:
+                util.wait(1)
+
+            self.runner.play()
+            t = time.time() - Controller.state['runtime']
+            print('RUNTIME: ' + str(round(t, 1)) + 's (' + str(round(t / 60, 1)) + ' min)')
+            Controller.state['bigLoopComplete'] += 1
+
+            # does enhancement and dumps and conditional repair
+            m = self.scripts['manage']
+            m.run('main')
+            if Controller.state['repairLoopComplete'] < Controller.state['repairLoop']:
+                Controller.state['repairLoopComplete'] += 1
+            else:
+                m.run('main repair')
+                Controller.state['repairLoopComplete'] = 0
+
         util.alert()
 
     def pauseToggle(self):
