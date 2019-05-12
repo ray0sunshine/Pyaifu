@@ -87,6 +87,7 @@ class Controller:
             t = time.time() - Controller.state['runtime']
             print('RUNTIME: ' + str(round(t, 1)) + 's (' + str(round(t / 60, 1)) + ' min)')
             Controller.state['bigLoopComplete'] += 1
+            util.wait(1)
 
             # does enhancement and dumps and conditional repair
             m = self.scripts['manage']

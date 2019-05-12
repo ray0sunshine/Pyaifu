@@ -1,4 +1,5 @@
 import sys
+import time
 import helper.util as util
 import helper.mouse as mouse
 
@@ -16,7 +17,7 @@ class Machine:
             self.state[k] = Step(v)
         self.start = data['start']
         self.cur = data['start']
-        self.pre = None
+        self.pre = '?'
 
     def run(self, starter=None):
         if starter:
@@ -25,7 +26,18 @@ class Machine:
             self.cur = self.start
 
         cur = self.state[self.cur]
+        curState = self.cur
+        curTime = time.time()
         while cur.next or cur.pixelCheck():
+            # check if the loop is potentially stuck
+            if curState != self.cur:
+                curState = self.cur
+                curTime = time.time()
+            elif time.time() - curTime > Config.i.data['stuck_timer']:
+                print('STUCK?\nCur: <' + self.cur + '> Prev: <' + self.pre + '>\n')
+                util.alert()
+                util.wait(Config.i.data['stuck_timer'])
+
             if not cur.function:
                 return
             self.execute()
@@ -73,7 +85,7 @@ class Machine:
         cur = self.state[self.cur]
 
         # if screen has changed, check if new state has been reached
-        while not cur.pixelCheck():
+        if not cur.pixelCheck():
             util.wait(0)
             self.checkNext()
             return

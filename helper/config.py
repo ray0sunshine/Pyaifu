@@ -12,7 +12,8 @@ class Config:
         'user',
         'pass',
         'pixel_threshold',
-        'min_time'
+        'min_time',
+        'stuck_timer'
     ]
 
     def __init__(self):
