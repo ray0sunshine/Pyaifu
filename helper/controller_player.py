@@ -76,11 +76,11 @@ class Controller:
         while Controller.state['bigLoopComplete'] < Controller.state['bigLoop']:
             # initial check logistics
             self.getLogisticTimer()
-            while Controller.state['waiting'] > 0:
+            if Controller.state['waiting'] > 0:
+                while Controller.state['waiting'] > 0:
+                    util.wait(1)
                 util.wait(1)
-
-            util.wait(1)
-            self.getLogisticTimer()
+                self.getLogisticTimer()
             self.runner.play()
             t = time.time() - Controller.state['runtime']
             print('RUNTIME: ' + str(round(t, 1)) + 's (' + str(round(t / 60, 1)) + ' min)')
