@@ -77,6 +77,8 @@ class Controller:
             # initial check logistics
             self.getLogisticTimer()
             if Controller.state['waiting'] > 0:
+                if min(Controller.state['logistic']) - time.time() > 80:
+                    self.runner.restart()
                 while Controller.state['waiting'] > 0:
                     util.wait(1)
                 util.wait(1)

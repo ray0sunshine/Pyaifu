@@ -64,7 +64,7 @@ def mouseUp():
 
 def middleClick():
     # mouse middle click
-    p = util.ilerp((Context.i.x, Context.i.y), (Context.i.x2, Context.i.y2))
+    p = ((Context.i.x2 - Context.i.x) / 2, (Context.i.y2 - Context.i.y) / 2)
     mouseTo(p)
     ctypes.windll.user32.mouse_event(MOUSEEVENTF_MIDDLEDOWN | MOUSEEVENTF_MIDDLEUP, 0, 0, 0, 0)
 
