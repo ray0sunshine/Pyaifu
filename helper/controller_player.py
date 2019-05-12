@@ -66,7 +66,6 @@ class Controller:
     def play(self):
         tr = threading.Thread(None, self.playThread, 'play')
         tr.start()
-        Controller.state['runtime'] = time.time()
         print('PLAY')
 
     def playThread(self):
@@ -83,6 +82,7 @@ class Controller:
                     util.wait(1)
                 util.wait(1)
                 self.getLogisticTimer()
+            Controller.state['runtime'] = time.time()
             self.runner.play()
             t = time.time() - Controller.state['runtime']
             print('RUNTIME: ' + str(round(t, 1)) + 's (' + str(round(t / 60, 1)) + ' min)')
