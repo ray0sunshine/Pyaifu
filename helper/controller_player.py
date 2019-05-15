@@ -33,7 +33,8 @@ class Controller:
         'smallLoop': 10,
         'smallLoopComplete': 0,
         'runtime': time.time(),
-        'sequence': 0
+        'sequence': 0,
+        'restart': 2
     }
 
     def __init__(self, files):
@@ -75,9 +76,9 @@ class Controller:
         while Controller.state['bigLoopComplete'] < Controller.state['bigLoop']:
             # initial check logistics
             self.getLogisticTimer()
+            if min(Controller.state['logistic']) - time.time() > 90:
+                self.runner.restart()
             if Controller.state['waiting'] > 0:
-                if min(Controller.state['logistic']) - time.time() > 80:
-                    self.runner.restart()
                 while Controller.state['waiting'] > 0:
                     util.wait(1)
                 util.wait(1)

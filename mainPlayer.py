@@ -22,10 +22,11 @@ labelTemplate = {
     'time': lambda: str(time.ctime()),
     'Small cycle (F5, F6)': lambda: str(round(Controller.state['smallLoopComplete'], 1)) + ' / ' + str(Controller.state['smallLoop']),
     'Big cycle (F7, F8)': lambda: str(Controller.state['bigLoopComplete']) + ' / ' + str(Controller.state['bigLoop']),
-    'Repair (ctrl+F7, ctrl+F8)': lambda: str(Controller.state['repairLoopComplete']) + ' / ' + str(Controller.state['repairLoop']),
+    'Repair (ctrl+[F7, F8])': lambda: str(Controller.state['repairLoopComplete']) + ' / ' + str(Controller.state['repairLoop']),
     'Runtime': lambda: str(round(time.time() - Controller.state['runtime'])) + 's (' + str(round((time.time() - Controller.state['runtime']) / 60, 1)) + ' min)',
     'Running (F2)': lambda: 'PAUSED' if Machine.blocked else 'RUNNING',
     'Sequence (F4)': lambda: str(Controller.state['sequence']),
+    'Restart (shift+[F7, F8])': lambda: str(Controller.state['restart']),
     'Waiting': lambda: str(Controller.state['waiting']),
     'Logistics (F3)': lambda: '\n' + '\n'.join(str(round(t)) + 's (' + str(round(t / 60, 1)) + ' min)' for t in [remain - time.time() for remain in Controller.state['logistic']])
 }
@@ -75,6 +76,8 @@ class Widget(QWidget):
         self.hotkey('f8', self.controller.increment, ['bigLoop'])
         self.hotkey('ctrl+f7', self.controller.decrement, ['repairLoop'])
         self.hotkey('ctrl+f8', self.controller.increment, ['repairLoop'])
+        self.hotkey('shift+f7', self.controller.decrement, ['restart'])
+        self.hotkey('shift+f8', self.controller.increment, ['restart'])
 
         self.hotkey('f10', self.controller.login)
         self.hotkey('ctrl+f10', self.controller.restart)
