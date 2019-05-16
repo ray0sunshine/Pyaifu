@@ -219,3 +219,6 @@ class Controller:
     def restart(self):
         m = self.scripts['login']
         m.run('kill app')
+
+    def restartRunner(self):
+        self.runner.restart(True)

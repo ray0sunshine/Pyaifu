@@ -81,6 +81,7 @@ class Widget(QWidget):
 
         self.hotkey('f10', self.controller.login)
         self.hotkey('ctrl+f10', self.controller.restart)
+        self.hotkey('shift+f10', self.controller.restartRunner)
         self.hotkey('f12', self.kill)
 
         timer = QTimer(self)
