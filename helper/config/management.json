@@ -242,7 +242,31 @@
                 }
             },
             "next": [
-                "enhanced"
+                "enhanced",
+                "not enough"
+            ]
+        },
+        "not enough": {
+            "name": "not enough",
+            "pixel": [
+                {"pos": [1126, 660], "rgb": [255, 227, 0]},
+                {"pos": [995, 671], "rgb": [49, 48, 49]},
+                {"pos": [897, 661], "rgb": [255, 255, 255]},
+                {"pos": [768, 667], "rgb": [49, 48, 49]}
+            ],
+            "function": {
+                "action": "rect",
+                "data": {
+                    "wait": 1,
+                    "retry": 1.5,
+                    "points": [
+                        [739, 654],
+                        [902, 707]
+                    ]
+                }
+            },
+            "next": [
+                "retirement"
             ]
         },
         "enhanced": {
