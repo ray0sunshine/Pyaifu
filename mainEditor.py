@@ -23,7 +23,7 @@ class Widget(QWidget):
         QWidget.__init__(self, parent)
         self.config = config.Config()
         self.data = self.config.data
-        Context(self.data['window'])
+        Context(self.data['window'], self.data['window2'])
         self.controller = Controller()
 
         self.setAttribute(Qt.WA_TranslucentBackground, True)
@@ -90,6 +90,7 @@ class Widget(QWidget):
 
         self.hotkey('ctrl+q', sys.exit)
         self.hotkey('ctrl+a', self.test)
+        self.hotkey('ctrl+w', Context.i.getForegroundWindow)
 
         keyboard.add_hotkey('8', mouse.mouseShift, args=(0, -1))  # up
         keyboard.add_hotkey('4', mouse.mouseShift, args=(-1, 0))  # left

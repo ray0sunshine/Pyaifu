@@ -10,6 +10,7 @@ MOUSEEVENTF_LEFTDOWN = 0x0002    # left button down
 MOUSEEVENTF_LEFTUP = 0x0004      # left button up
 MOUSEEVENTF_MIDDLEDOWN = 0x0020  # middle button down
 MOUSEEVENTF_MIDDLEUP = 0x0040    # middle button up
+MOUSEEVENTF_WHEEL = 0x0800       # wheel button rolled
 
 DRAG_TIME_STEP = 0.005           # time to wait during drag move
 
@@ -67,6 +68,24 @@ def middleClick():
     p = ((Context.i.x2 - Context.i.x) / 2, (Context.i.y2 - Context.i.y) / 2)
     mouseTo(p)
     ctypes.windll.user32.mouse_event(MOUSEEVENTF_MIDDLEDOWN | MOUSEEVENTF_MIDDLEUP, 0, 0, 0, 0)
+
+
+def wheelScroll(d, t, mod=None):
+    # mouse wheel scrolling
+    p = ((Context.i.x2 - Context.i.x) / 2, (Context.i.y2 - Context.i.y) / 2)
+    mouseTo(p)
+    if mod:
+        gui.keyDown(mod)
+        util.wait(0.1)
+        for _ in range(t):
+            gui.scroll(d, x=p[0], y=p[1])
+            util.wait(0.05)
+        util.wait(0.1)
+        gui.keyUp(mod)
+    else:
+        for _ in range(t):
+            gui.scroll(d, x=p[0], y=p[1])
+            util.wait(0.05)
 
 
 def rDrag(p1a, p1b, p4a, p4b, delay=0.3, hold=0.05):

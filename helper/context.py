@@ -7,10 +7,19 @@ import threading
 class Context:
     i = None
 
-    def __init__(self, windowName):
+    def __init__(self, windowName, windowName2=''):
         Context.i = self
         self.lock = threading.Lock()
-        self.window = win.FindWindow(None, windowName)
+        try:
+            self.window = win.FindWindow(None, windowName)
+        except:
+            if windowName2 != '':
+                windowName = windowName2
+            else:
+                windowName = self.getForegroundWindow()
+            self.window = win.FindWindow(None, windowName)
+
+        print('context:', windowName)
         self.x, self.y, self.x2, self.y2 = wgui.GetWindowRect(wgui.FindWindow(None, windowName))
         self.w = self.x2 - self.x
         self.h = self.y2 - self.y
@@ -35,3 +44,6 @@ class Context:
         if handle:
             win32com.client.Dispatch("WScript.Shell").SendKeys('')
             wgui.SetForegroundWindow(handle)
+
+    def getForegroundWindow(self):
+        print(wgui.GetWindowText(wgui.GetForegroundWindow()))

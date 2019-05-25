@@ -9,6 +9,7 @@ class Config:
 
     dataNames = [
         'window',
+        'window2',
         'user',
         'pass',
         'pixel_threshold',

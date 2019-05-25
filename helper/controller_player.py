@@ -119,6 +119,9 @@ class Controller:
                 mEnd.forceRun('rc' + str(ri))
             util.wait(0.25)
 
+    def ctrlWheelZoomOut(self):
+        mouse.wheelScroll(-10, random.randint(8, 12), 'ctrl')
+
     def loopLogi(self):
         m = self.scripts['logi']
         while True:
