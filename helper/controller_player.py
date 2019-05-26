@@ -120,7 +120,7 @@ class Controller:
             util.wait(0.25)
 
     def ctrlWheelZoomOut(self):
-        mouse.wheelScroll(-10, random.randint(8, 12), 'ctrl')
+        mouse.wheelScroll(-10, random.randint(12, 15), 'ctrl')
 
     def loopLogi(self):
         m = self.scripts['logi']
@@ -170,7 +170,7 @@ class Controller:
 
     def getSingleLogisticTimer(self, i):
         # do ocr
-        coord = [833, 148, 998, 187]    # TL and BR of first box
+        coord = [855, 151, 1015, 191]    # TL and BR of first box
         offset = [0, 113, 225, 338]     # y offsets from top location
 
         xoff = Context.i.x

@@ -37,7 +37,7 @@ class Widget(QWidget):
         QWidget.__init__(self, parent)
         self.config = config.Config()
         self.data = self.config.data
-        Context(self.data['window'])
+        Context(self.data['window'], self.data['window2'])
 
         self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.setAttribute(Qt.WA_TransparentForMouseEvents, True)

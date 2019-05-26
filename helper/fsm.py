@@ -1,5 +1,6 @@
 import sys
 import time
+import random
 import helper.util as util
 import helper.mouse as mouse
 
@@ -139,6 +140,8 @@ class Step:
             mouse.click(util.icpoint(*data['points']))
         elif action == 'middle':
             mouse.middleClick()
+        elif action == 'zoom_out':
+            mouse.wheelScroll(-10, random.randint(12, 15), 'ctrl')
         elif action == 'drag':
             mouse.rDrag(*data['points'])
         else:

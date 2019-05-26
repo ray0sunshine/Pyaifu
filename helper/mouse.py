@@ -72,7 +72,7 @@ def middleClick():
 
 def wheelScroll(d, t, mod=None):
     # mouse wheel scrolling
-    p = ((Context.i.x2 - Context.i.x) / 2, (Context.i.y2 - Context.i.y) / 2)
+    p = ((Context.i.x2 - Context.i.x) / 2, (Context.i.y2 - Context.i.y) * 0.25)
     mouseTo(p)
     if mod:
         gui.keyDown(mod)

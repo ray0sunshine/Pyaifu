@@ -73,6 +73,16 @@ class Controller:
                 }
             }
 
+    def makeZoomOut(self):
+        if self.cur:
+            self.cur['function'] = {
+                'action': 'zoom_out',
+                'data': {
+                    'wait': 0.75,
+                    'retry': 1.5
+                }
+            }
+
     def makeDrag(self):
         if self.cur and len(self.cur['pixel']) >= 4:
             self.cur['function'] = {
@@ -163,7 +173,7 @@ class Controller:
             step['marks'] = []
             step['pmap'] = None
             allpix = step['pixel']
-            if step['function'] and step['function']['action'] != 'middle':
+            if step['function'] and step['function']['action'] not in ['middle', 'zoom_out']:
                 for pix in step['function']['data']['points']:
                     allpix.append({
                         'pos': pix,
@@ -181,5 +191,5 @@ class Controller:
                 action = self.cur['function']['action']
                 if action == 'drag':
                     self.makeDrag()
-                elif action != 'middle':
+                elif action not in ['middle', 'zoom_out']:
                     self.makeClick(action)

@@ -69,6 +69,7 @@ class Widget(QWidget):
         self.hotkey('ctrl+f1', self.removePixel)
         self.hotkey('f2', self.makeRectClick)
         self.hotkey('ctrl+f2', self.makeMiddleClick)
+        self.hotkey('ctrl+shift+f2', self.makeZoomOut)
         self.hotkey('f3', self.makeCircleClick)
         self.hotkey('ctrl+f3', self.getWait)
         self.hotkey('f4', self.makeDrag)
@@ -132,6 +133,11 @@ class Widget(QWidget):
 
     def makeMiddleClick(self):
         self.controller.makeMiddleClick()
+        self.updateLabels()
+        self.update()
+
+    def makeZoomOut(self):
+        self.controller.makeZoomOut()
         self.updateLabels()
         self.update()
 
@@ -222,6 +228,8 @@ class Widget(QWidget):
                 appendix += ' {' + str(cur['function']['data']['wait']) + ', ' + str(cur['function']['data']['retry']) + '}'
                 if cur['function']['action'] == 'middle':
                     appendix += ' |MID|'
+                elif cur['function']['action'] == 'zoom_out':
+                    appendix += ' |Z_out|'
 
             ql.setText(str(i) + ' - <' + cur['name'] + '> ' + str(cur['next']) + appendix)
             if self.controller.idx == i:
