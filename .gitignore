@@ -2,5 +2,6 @@
 .vscode/*
 helper/config/main_config.json
 02/*
+66/*
 crates/*
 runPlayer_*

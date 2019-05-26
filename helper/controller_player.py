@@ -188,19 +188,20 @@ class Controller:
         remaining = round(time.time() + remaining)
         Controller.state['logistic'][i] = remaining
 
-    def withdraw(self, grid):
+    def withdraw(self, grid=None):
         m = self.scripts['fight']
-        m.forceRun('g' + str(grid))
-        util.wait(0.2)
+        if grid:
+            m.forceRun('g' + str(grid))
+            util.wait(0.1, 0.04)
         m.forceRun('withdraw')
-        util.wait(0.2)
+        util.wait(0.1, 0.04)
 
     def swap(self, gFrom, gTo):
         m = self.scripts['fight']
         pFrom = m.state['g' + str(gFrom)].function['data']['points']
         pTo = m.state['g' + str(gTo)].function['data']['points']
-        mouse.rDrag(*pFrom, *pTo, delay=0.15)
-        util.wait(0.2)
+        mouse.rDrag(*pFrom, *pTo, delay=0.08)
+        util.wait(0.1)
 
     def increment(self, name, amount=1):
         Controller.state[name] += amount
