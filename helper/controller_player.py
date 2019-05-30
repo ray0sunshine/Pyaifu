@@ -192,7 +192,7 @@ class Controller:
         m = self.scripts['fight']
         if grid:
             m.forceRun('g' + str(grid))
-            util.wait(0.1, 0.04)
+            util.wait(0.12, 0.04)
         m.forceRun('withdraw')
         util.wait(0.1, 0.04)
 
@@ -200,7 +200,7 @@ class Controller:
         m = self.scripts['fight']
         pFrom = m.state['g' + str(gFrom)].function['data']['points']
         pTo = m.state['g' + str(gTo)].function['data']['points']
-        mouse.rDrag(*pFrom, *pTo, delay=0.08)
+        mouse.rDrag(*pFrom, *pTo, delay=0.12)
         util.wait(0.1)
 
     def increment(self, name, amount=1):
