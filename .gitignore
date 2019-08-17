@@ -4,5 +4,9 @@ helper/config/main_config.json
 02/*
 36/*
 66/*
+ameli/*
+cube/*
+faker/*
+seiomi/*
 crates/*
 runPlayer_*

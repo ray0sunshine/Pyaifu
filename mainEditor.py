@@ -209,7 +209,8 @@ class Widget(QWidget):
         self.getDelay('retry')
 
     def screenshotFile(self):
-        util.getScreen((Context.i.x, Context.i.y, Context.i.x2, Context.i.y2), 'test/ss_')
+        # util.getScreen((Context.i.x, Context.i.y, Context.i.x2, Context.i.y2), 'test/ss_')
+        util.testConvolution((Context.i.x, Context.i.y, Context.i.x2, Context.i.y2), 'test/ss_')
 
     def updateLabels(self):
         encounteredNames = set()

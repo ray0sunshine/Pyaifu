@@ -7,6 +7,7 @@ import winsound
 
 from desktopmagic.screengrab_win32 import getRectAsImage
 from datetime import datetime
+from PIL import Image
 
 
 def iround(n):
@@ -139,6 +140,30 @@ def getScreen(area, filename):
     if filename:
         img.save(filename + timestamp() + '.png', format='png')
     return img
+
+
+def testConvolution(area, filename):
+    img = getRectAsImage(area)
+    img = contrast(img, 200)
+
+    downRatio = max(img.size) / 256
+    lowSize = tuple(int(d // downRatio) for d in img.size)
+    print(lowSize)
+
+    imgSmall = img.resize(lowSize, resample=Image.BILINEAR)
+    result = imgSmall.resize(img.size, Image.NEAREST)
+
+    if filename:
+        result.save(filename + timestamp() + '.png', format='png')
+    return img
+
+
+def contrast(img, level):
+    factor = (259 * (level + 255)) / (255 * (259 - level))
+
+    def contrast(c):
+        return 128 + factor * (c - 128)
+    return img.point(contrast)
 
 
 def alert():

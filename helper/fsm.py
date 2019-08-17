@@ -51,13 +51,13 @@ class Machine:
         return None
 
     # check if the screen pixels matches any given state
-    def checkState(self, name):
-        return self.state[name].pixelCheck()
+    def checkState(self, name, some=False, fn=None):
+        return self.state[name].pixelCheck(some, fn)
 
     # waits for a conditional state (xor with invert so it can also wait for a state to go away)
-    def waitState(self, name, inverse=False):
-        while not (self.checkState(name) ^ inverse):
-            util.wait(0.1)
+    def waitState(self, name, inverse=False, delay=0.1, some=False, fn=None):
+        while not (self.checkState(name, some, fn) ^ inverse):
+            util.wait(delay)
 
     # used to directly execute a state's action
     def forceRun(self, name):
@@ -125,10 +125,12 @@ class Step:
     # this should be modified to a conditional check that allows customization
     # which can give it the ability to check other variables
     # or just allow the controller to pause and do other checks (then the controller will be specific but separate scripts should not need to reimplement the same stuff)
-    def pixelCheck(self):
-        ret = all([util.matchColor(pix['rgb'], Context.i.getColor(*(pix['pos'])), Config.i.data['pixel_threshold']) for pix in self.pixel])
-        # can do some miss checks here
-        return ret
+    def pixelCheck(self, some=False, fn=None):
+        if fn:
+            res = [fn(pix['rgb'], Context.i.getColor(*(pix['pos']))) for pix in self.pixel]
+        else:
+            res = [util.matchColor(pix['rgb'], Context.i.getColor(*(pix['pos'])), Config.i.data['pixel_threshold']) for pix in self.pixel]
+        return any(res) if some else all(res)
 
     def run(self):
         # does the actual action

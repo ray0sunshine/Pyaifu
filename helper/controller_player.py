@@ -34,7 +34,7 @@ class Controller:
         'smallLoopComplete': 0,
         'runtime': time.time(),
         'sequence': 0,
-        'restart': 2
+        'restart': 32
     }
 
     def __init__(self, files):
@@ -112,12 +112,18 @@ class Controller:
     def clickAway(self, toMain=False):
         mEnd = self.scripts['end']
         ri = random.randint(0, 9)
-        while not mEnd.checkState('loading'):
-            if toMain:
-                mEnd.forceRun('end big loop')
-            else:
-                mEnd.forceRun('rc' + str(ri))
-            util.wait(0.25)
+        clickSafety = 80
+        clickDone = 0
+        while not mEnd.checkState('loading') and not mEnd.checkState('partial main') and clickDone < clickSafety:
+            if not Machine.blocked:
+                if toMain:
+                    mEnd.forceRun('end big loop')
+                else:
+                    mEnd.forceRun('rc' + str(ri))
+                clickDone += 1
+                if clickDone >= clickSafety:
+                    util.alert()
+            util.wait(0.4)
 
     def ctrlWheelZoomOut(self):
         mouse.wheelScroll(-10, random.randint(12, 15), 'ctrl')
@@ -196,12 +202,12 @@ class Controller:
         m.forceRun('withdraw')
         util.wait(0.1, 0.04)
 
-    def swap(self, gFrom, gTo):
+    def swap(self, gFrom, gTo, wait=0.1):
         m = self.scripts['fight']
         pFrom = m.state['g' + str(gFrom)].function['data']['points']
         pTo = m.state['g' + str(gTo)].function['data']['points']
         mouse.rDrag(*pFrom, *pTo, delay=0.12)
-        util.wait(0.1)
+        util.wait(wait)
 
     def increment(self, name, amount=1):
         Controller.state[name] += amount
@@ -226,3 +232,7 @@ class Controller:
 
     def restartRunner(self):
         self.runner.restart(True)
+
+    def customFunction(self, index):
+        if hasattr(self.runner, 'customFunction'):
+            self.runner.customFunction(index)

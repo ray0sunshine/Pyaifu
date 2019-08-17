@@ -84,6 +84,11 @@ class Widget(QWidget):
         self.hotkey('shift+f10', self.controller.restartRunner)
         self.hotkey('f12', self.kill)
 
+        self.hotkey('a', self.controller.customFunction, [0])
+        self.hotkey('s', self.controller.customFunction, [1])
+        self.hotkey('d', self.controller.customFunction, [2])
+        self.hotkey('f', self.controller.customFunction, [3])
+
         timer = QTimer(self)
         timer.setSingleShot(False)
         timer.timeout.connect(self.update)
